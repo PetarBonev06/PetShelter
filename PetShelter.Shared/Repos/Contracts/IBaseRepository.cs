@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShelter.Shared.RepositoryContracts
+namespace PetShelter.Shared.Repos.Contracts
 {
     public interface IBaseRepository<TModel>
-        where TModel : BaseModel
+         where TModel : BaseModel
     {
         Task<IEnumerable<TModel>> GetAllAsync();
         Task<TModel> GetByIdAsync(int id);
@@ -24,3 +24,5 @@ namespace PetShelter.Shared.RepositoryContracts
 
     }
 }
+
+

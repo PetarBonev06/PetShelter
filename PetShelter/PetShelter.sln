@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShelter", "PetShelter.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShelter.Shared", "..\PetShelter.Shared\PetShelter.Shared.csproj", "{EC260B12-1EA9-44C7-B50D-4D41228E9237}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShelter.Data", "..\PetShelter.Data\PetShelter.Data.csproj", "{6F29AAE0-C84C-4B33-9399-B9B1BD534DE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShelter.Data", "..\PetShelter.Data\PetShelter.Data.csproj", "{6F29AAE0-C84C-4B33-9399-B9B1BD534DE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShelter.Service", "..\PetShelter.Service\PetShelter.Service.csproj", "{88D63E29-E24E-4350-91A5-2959A430444B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{6F29AAE0-C84C-4B33-9399-B9B1BD534DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F29AAE0-C84C-4B33-9399-B9B1BD534DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F29AAE0-C84C-4B33-9399-B9B1BD534DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88D63E29-E24E-4350-91A5-2959A430444B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88D63E29-E24E-4350-91A5-2959A430444B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88D63E29-E24E-4350-91A5-2959A430444B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88D63E29-E24E-4350-91A5-2959A430444B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShelter.Shared.PetShelter.Shared.Attributes
+namespace PetShelter.Shared.Repos.Contracts
 {
-    public class AutoBind : Attribute
+    public interface IPetTypeRepository : IBaseRepository<PetTypeDto>
     {
+
     }
 }
