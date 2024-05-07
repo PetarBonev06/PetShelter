@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using PetShelter.Data.Entities;
-using PetShelter.Shared.RepositoryContracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PetShelter.Shared.Dtos;
+using PetShelter.Shared.Repos.Contracts;
 
 namespace PetShelter.Data.Repos
 {

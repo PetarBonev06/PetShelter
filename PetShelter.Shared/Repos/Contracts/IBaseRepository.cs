@@ -1,4 +1,4 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
+﻿using PetShelter.Shared.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +18,6 @@ namespace PetShelter.Shared.Repos.Contracts
         Task DeleteAsync(int id);
         Task<bool> ExistsByIdAsync(int id);
         Task<IEnumerable<TModel>> GetWithPaginationAsync(int pageSize, int pageNumber);
-    }
-    public interface IBreedRepository : IBaseRepository<BreedDto>
-    {
-
     }
 }
 
