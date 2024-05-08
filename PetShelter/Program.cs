@@ -17,9 +17,9 @@ builder.Services.AddDbContext<PetShelterDbContext>(options =>
     options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
 });
 
-builder.Services.AutoBind(typeof(PetService).Assembly);
-builder.Services.AutoBind(typeof(PetRepository).Assembly);
-builder.Services.AddAutoMapper(m => m.AddProfile(new AutoMapperConfiguration()));
+//builder.Services.AutoBind(typeof(PetService).Assembly);
+//builder.Services.AutoBind(typeof(PetRepository).Assembly);
+//builder.Services.AddAutoMapper(m => m.AddProfile(new AutoMapperConfiguration()));
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

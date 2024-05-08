@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetShelter.Shared.PetShelter.Shared.Attributes
+namespace PetShelter.Shared.Attributes
 {
-    public class AutoBindAttributes : Attribute
+    public class AutoBindAttribute : Attribute
     {
     }
 }

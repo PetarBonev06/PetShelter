@@ -1,4 +1,7 @@
-﻿using System;
+﻿using PetShelter.Shared.Dtos;
+using PetShelter.Shared.Repos.Contracts;
+using PetShelter.Shared.Services.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace PetShelter.Service
 {
-    public class BreedsService : BaseCrudService<BreedDto, IBreedRepository>, IBreedService
+    public class LocationService : BaseCrudService<LocationDto, ILocationRepository>, ILocationService
     {
-        public BreedsService(IBreedRepository repository) : base(repository)
+        public LocationService(ILocationRepository repository) : base(repository)
         {
 
         }

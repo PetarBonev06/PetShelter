@@ -81,7 +81,7 @@ namespace PetShelter.Data.Repos
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                _context.Entry(entity).CurrentValue.SetValues(model);
+                _context.Entry(entity).CurrentValues.SetValues(model);
                 await _context.SaveChangesAsync();
             }
             catch (SqlException ex)
