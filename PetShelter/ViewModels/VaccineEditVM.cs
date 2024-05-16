@@ -1,6 +1,13 @@
-﻿namespace PetShelter.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PetShelter.ViewModels
 {
-    public class VaccineEditVM
+    public class VaccineEditVM : BaseVm
     {
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Description { get; set; }
     }
 }

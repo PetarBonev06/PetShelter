@@ -1,6 +1,6 @@
 ﻿namespace PetShelter.ViewModels
 {
-    public class ChangePasswordVM
+    public class ChangePasswordVM : BaseVm
     {
     }
 }

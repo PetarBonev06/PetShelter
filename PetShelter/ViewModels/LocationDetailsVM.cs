@@ -1,4 +1,7 @@
-﻿namespace PetShelter.ViewModels
+﻿using Microsoft.Graph;
+using System.Collections.Generic;
+
+namespace PetShelter.ViewModels
 {
     public class LocationDetailsVM : BaseVm
     {
@@ -9,5 +12,7 @@
         public string Country { get; set; }    
 
         public int? ShelterId { get; set; }
+
+        public List<PetDetailsVM> Pets { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace PetShelter.ViewModels
 {
-    public class RegisterVM
+    public class RegisterVM : BaseVm
     {
     }
 }
