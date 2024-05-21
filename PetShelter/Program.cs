@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PetShelter;
 using PetShelter.Data;
 using PetShelter.Data.Repos;
 using PetShelter.Service;
+using PetShelter.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +19,9 @@ builder.Services.AddDbContext<PetShelterDbContext>(options =>
     options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
 });
 
-//builder.Services.AutoBind(typeof(PetService).Assembly);
-//builder.Services.AutoBind(typeof(PetRepository).Assembly);
-//builder.Services.AddAutoMapper(m => m.AddProfile(new AutoMapperConfiguration()));
+builder.Services.AutoBind(typeof(PetService).Assembly);
+builder.Services.AutoBind(typeof(PetRepository).Assembly);
+builder.Services.AddAutoMapper(m => m.AddProfile(new AutoMapperConfiguration()));
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
