@@ -8,7 +8,6 @@ using PetShelter.Shared.Dtos;
 using PetShelter.Shared.Repos.Contracts;
 using PetShelter.Shared.Services.Contracts;
 using PetShelter.ViewModels;
-using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
@@ -19,7 +18,7 @@ namespace PetShelter.Controllers
         where TModel : BaseModel
         where TRepository : IBaseRepository<TModel>
         where TService : IBaseCrudService<TModel, TRepository>
-        where TEditVM : BaseVm, new()
+        where TEditVM : BaseVm, new ()
         where TDetailsVM : BaseVm
     {
         protected readonly TService _service;
