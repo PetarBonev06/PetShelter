@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PetShelter.ViewModels.PetTypeDetailsVM>
+﻿@model IEnumerable<PetShelter.ViewModels.PetVaccineDetailsVM>
 
 @{
     ViewBag.Title = "Index";
@@ -9,19 +9,25 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
-
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.PetId)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VaccineId)
+        </th>
+
         <th>Actions</th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
-            <th>
-                @Html.DisplayFor(modelItem => item.Name)
-            </th>
+            <td>
+                @Html.DisplayNameFor(modelItem => item.PetId)
+            </td>
+            <td>
+                @Html.DisplayNameFor(modelItem => item.VaccineId)
+            </td>
 
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
@@ -31,3 +37,4 @@
         </tr>
     }
 </table>
+}

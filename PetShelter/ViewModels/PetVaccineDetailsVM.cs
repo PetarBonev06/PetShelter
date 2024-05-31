@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graph;
 using PetShelter.Data.Entities;
+using System.Collections.Generic;
 
 namespace PetShelter.ViewModels
 {
@@ -16,3 +17,4 @@ namespace PetShelter.ViewModels
         public List<PetDetailsVM> Pets { get; set; }
     }
 }
+

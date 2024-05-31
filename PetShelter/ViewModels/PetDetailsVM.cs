@@ -5,7 +5,7 @@ using User = PetShelter.Data.Entities.User;
 
 namespace PetShelter.ViewModels
 {
-    public class PetDetailsVM
+    public class PetDetailsVM : BaseVm
     {
         public string Name { get; set; }
 
