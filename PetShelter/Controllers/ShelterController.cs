@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using PetShelter.Services;
 using PetShelter.Shared.Dtos;
 using PetShelter.Shared.Repos.Contracts;
 using PetShelter.Shared.Services;
 using PetShelter.Shared.Services.Contracts;
 using PetShelter.ViewModels;
 using PetShelterMVC2.Controllers;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PetShelter.Controllers
@@ -25,7 +25,7 @@ namespace PetShelter.Controllers
         {
             var editVM = new ShelterEditVM
             {
-                LocationList = (await _locationsService.GetAllActiveAsync())
+                LocationsList = (await _locationsService.GetAllActiveAsync())
                 .Select(x => new SelectListItem($"{x.Country},{x.City},{x.Address}", x.Id.ToString()))
             };
             return editVM;
