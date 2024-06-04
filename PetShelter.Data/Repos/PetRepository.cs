@@ -17,5 +17,20 @@ namespace PetShelter.Data.Repos
         public PetRepository(PetShelterDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
+
+        public async Task AdoptPetAsync(int userId, int petId)
+        {
+            var pet = await GetByIdAsync(petId);
+            pet.AdopterId = userId;
+            pet.IsAdopted = true;
+            await SaveAsync(pet);
+        }
+
+        public async Task GivePetAsync(int userId, int shelterId, PetDto pet)
+        {
+            pet.ShelterId = shelterId;
+            pet.GiverId = userId;
+            await SaveAsync(pet);
+        }
     }
 }

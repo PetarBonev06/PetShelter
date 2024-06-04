@@ -10,6 +10,7 @@ namespace PetShelter.Shared.Services.Contracts
 {
     public interface IRoleService : IBaseCrudService<RoleDto, IRoleRepository>
     {
+        Task<RoleDto> GetByNameIfExistsAsync(string name);
     }
 }
 

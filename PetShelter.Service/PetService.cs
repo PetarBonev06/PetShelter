@@ -15,5 +15,15 @@ namespace PetShelter.Service
         {
 
         }
+
+        public Task AdoptPetAsync(int userId, int petId)
+        {
+            return _repository.AdoptPetAsync(userId, petId);
+        }
+
+        public Task GivePetAsync(int userId, int shelterId, PetDto pet)
+        {
+            return _repository.GivePetAsync(userId, shelterId, pet);
+        }
     }
 }

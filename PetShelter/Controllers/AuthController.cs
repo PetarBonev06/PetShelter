@@ -64,7 +64,7 @@ namespace PetShelter.Controllers
             var user = await this.usersService.GetByUsernameAsync(username);
             var claims = new[]
             {
-                new Claim(ClaimType.Name, user.Username),
+                new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Role, user.Role.Name),
             };
 
