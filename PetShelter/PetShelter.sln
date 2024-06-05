@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShelter.Data", "..\PetSh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShelter.Service", "..\PetShelter.Service\PetShelter.Service.csproj", "{88D63E29-E24E-4350-91A5-2959A430444B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShelter.Tests", "..\PetShelter.Tests\PetShelter.Tests.csproj", "{3B88BD50-667F-4241-AE18-AD189B9CE9C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{88D63E29-E24E-4350-91A5-2959A430444B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88D63E29-E24E-4350-91A5-2959A430444B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88D63E29-E24E-4350-91A5-2959A430444B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B88BD50-667F-4241-AE18-AD189B9CE9C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B88BD50-667F-4241-AE18-AD189B9CE9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B88BD50-667F-4241-AE18-AD189B9CE9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B88BD50-667F-4241-AE18-AD189B9CE9C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
