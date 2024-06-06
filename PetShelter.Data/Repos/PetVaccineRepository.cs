@@ -17,5 +17,13 @@ namespace PetShelter.Data.Repos
         public PetVaccineRepository(PetShelterDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
+
+        public async Task VaccinatePetAsync(int petId, int vaccineId)
+        {
+            PetVaccineDto petVaccineDto = new PetVaccineDto();
+            petVaccineDto.VaccineId = petId;
+            petVaccineDto.PetId = vaccineId;
+            await SaveAsync(petVaccineDto);
+        }
     }
 }
