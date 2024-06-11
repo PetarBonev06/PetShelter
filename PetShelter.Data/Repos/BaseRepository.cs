@@ -8,7 +8,7 @@ using PetShelter.Shared.Repos.Contracts;
 namespace PetShelter.Data.Repos
 {
     public abstract class BaseRepository<T, TModel> : IBaseRepository<TModel>, IDisposable
-        where T : BaseEntity
+        where T : class, IBaseEntity
         where TModel : BaseModel
     {
         protected readonly DbContext _context;

@@ -28,7 +28,7 @@ namespace PetShelter.Tests.Services
             var breedDto = new BreedDto
             {
                 Id = 0,
-                Name = "Pug",
+                Name = "Chihuahua",
                 Size = BreedSize.Small
             };
             //Act
@@ -70,7 +70,7 @@ namespace PetShelter.Tests.Services
             var breedDto = new BreedDto
             {
                 Id = 0,
-                Name = "Pug",
+                Name = "Chihuahua",
                 Size = BreedSize.Small
             };
 
@@ -109,7 +109,7 @@ namespace PetShelter.Tests.Services
             var breedDto = new BreedDto
             {
                 Id = 1,
-                Name = "Pug",
+                Name = "Chihuahua",
                 Size = BreedSize.Small
             };
             _breedRepositoryMock.Setup(s => s.SaveAsync(It.Is<BreedDto>(x => x.Equals(breedDto))))

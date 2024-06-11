@@ -27,8 +27,8 @@ namespace PetShelter.Tests.Services
             var locationDto = new LocationDto
             {
                 Id = 1,
-                City = "D-grad",
-                Address = "Tsar Simeon 10a 20",
+                City = "Dimitrovgrad",
+                Address = "Vasil Levski 24a",
                 Country = "Bulgaria",
                 ShelterId = 0
             };
@@ -68,8 +68,8 @@ namespace PetShelter.Tests.Services
             var locationDto = new LocationDto
             {
                 Id = 1,
-                City = "D-grad",
-                Address = "Tsar Simeon 10a 20",
+                City = "Dimitrovgrad",
+                Address = "Vasil Levski 24a",
                 Country = "Bulgaria",
                 ShelterId = 0
             };
@@ -108,8 +108,8 @@ namespace PetShelter.Tests.Services
             var locationDto = new LocationDto
             {
                 Id = 1,
-                City = "D-grad",
-                Address = "Tsar Simeon 10a 20",
+                City = "Dimitrovgrad",
+                Address = "Vasil Levski 24a",
                 Country = "Bulgaria",
                 ShelterId = 0
             };
