@@ -117,6 +117,7 @@ namespace PetShelter.Tests.Services
                 .Verifiable();
             //Act
             await _service.SaveAsync(locationDto);
+
             //Assert
             _locationRepositoryMock.Verify(x => x.SaveAsync(locationDto), Times.Once());
         }
