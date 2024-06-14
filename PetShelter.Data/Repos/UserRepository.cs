@@ -4,6 +4,7 @@ using PetShelter.Shared.Repos.Contracts;
 using PetShelter.Data.Entities;
 using PetShelter.Shared.Attributes;
 using Microsoft.EntityFrameworkCore;
+using PetShelter.Shared.Security;
 
 namespace PetShelter.Data.Repos
 {
@@ -16,7 +17,8 @@ namespace PetShelter.Data.Repos
 
         public async Task<bool> CanUserLoginAsync(string username, string password)
         {
-            return await _dbSet.AnyAsync(u => u.Username == username && u.Password == password);
+            var hashedPassword = (await this.GetByUsernameAsync(username))?.Password;
+            return PasswordHasher.VerifyPassword(password, hashedPassword);
         }
 
         public async Task<UserDto> GetByUsernameAsync(string username)

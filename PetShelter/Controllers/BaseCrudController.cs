@@ -79,7 +79,7 @@ namespace PetShelter.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> Create()
         {
-            var editVM = await PrePopulateVMAsync();
+            var editVM = await PrePopulateVMAsync(new TEditVM());
 
             return View(editVM);
         }
