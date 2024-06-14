@@ -12,5 +12,6 @@ namespace PetShelter.Shared.Services.Contracts
     {
         Task GivePetAsync(int userId, int shelterId, PetDto pet);
         Task AdoptPetAsync(int userId, int petId);
+        Task VaccinatePetAsync(int petId, int vaccineId);
     }
 }

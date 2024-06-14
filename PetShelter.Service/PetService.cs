@@ -25,5 +25,10 @@ namespace PetShelter.Service
         {
             return _repository.GivePetAsync(userId, shelterId, pet);
         }
+
+        public Task VaccinatePetAsync(int petId, int vaccineId)
+        {
+            return _repository.VaccinatePetAsync(petId, vaccineId);
+        }
     }
 }

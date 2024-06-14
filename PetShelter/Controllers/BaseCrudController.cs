@@ -33,14 +33,15 @@ namespace PetShelter.Controllers
         protected const int DefaultPageSize = 10;
         protected const int DefaultPageNumber = 1;
         protected const int MaxPageSize = 100;
+
         protected virtual Task<string?> Validate(TEditVM editVM)
         {
             return Task.FromResult<string?>(null);
         }
 
-        protected virtual Task<TEditVM> PrePopulateVMAsync()
+        protected virtual Task<TEditVM> PrePopulateVMAsync(TEditVM editVM)
         {
-            return Task.FromResult(new TEditVM());
+            return Task.FromResult(editVM);
         }
 
         [HttpGet]

@@ -14,8 +14,10 @@ namespace PetShelter.Data.Repos
     [AutoBind]
     public class PetRepository : BaseRepository<Pet, PetDto>, IPetRepository
     {
-        public PetRepository(PetShelterDbContext context, IMapper mapper) : base(context, mapper)
+        private readonly IPetVaccineRepository _vaccinesRepository;
+        public PetRepository(PetShelterDbContext context, IMapper mapper, IPetVaccineRepository vaccinesRepository) : base(context, mapper)
         {
+            _vaccinesRepository = vaccinesRepository;
         }
 
         public async Task AdoptPetAsync(int userId, int petId)
@@ -31,6 +33,14 @@ namespace PetShelter.Data.Repos
             pet.ShelterId = shelterId;
             pet.GiverId = userId;
             await SaveAsync(pet);
+        }
+
+        public async Task VaccinatePetAsync(int petId, int vaccineId)
+        {
+            var pv = new PetVaccineDto();
+            pv.PetId = petId;
+            pv.VaccineId = vaccineId;
+            await _vaccinesRepository.SaveAsync(pv);
         }
     }
 }

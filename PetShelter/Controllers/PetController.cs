@@ -8,6 +8,7 @@ using PetShelter.Shared.Repos.Contracts;
 using PetShelter.Shared.Services.Contracts;
 using PetShelter.ViewModels;
 using System.Threading.Tasks;
+using PetShelter.Shared;
 
 namespace PetShelter.Controllers
 {
