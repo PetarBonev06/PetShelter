@@ -9,6 +9,9 @@ using PetShelter.Shared.Services.Contracts;
 using PetShelter.ViewModels;
 using System.Threading.Tasks;
 using PetShelter.Shared;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace PetShelter.Controllers
 {
@@ -20,6 +23,7 @@ namespace PetShelter.Controllers
         protected readonly IShelterService _sheltersService;
         protected readonly IUserService _usersService;
         protected readonly IVaccineService _vaccinesService;
+
         public PetController(IPetService service, IMapper mapper, IPetTypeService petTypesService, IBreedsService breedsService, IShelterService sheltersService, IUserService usersService, IVaccineService vaccinesService) : base(service, mapper)
         {
             this._petTypeService = petTypesService;

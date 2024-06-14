@@ -1,6 +1,7 @@
 ﻿using Microsoft.Graph;
 using PetShelter.Data.Entities;
 using System.Collections.Generic;
+using System.ComponentModel;
 using User = PetShelter.Data.Entities.User;
 
 namespace PetShelter.ViewModels
@@ -9,37 +10,37 @@ namespace PetShelter.ViewModels
     {
         public string Name { get; set; }
 
-        public int Age {  get; set; }
+        public int Age { get; set; }
 
         public string Color { get; set; }
 
-        public bool IsAdopted {  get; set; }
+        [DisplayName("Adopted")]
+        public bool IsAdopted { get; set; }
 
-        public bool IsEuthanized {  get; set; }
+        [DisplayName("Euthanized")]
+        public bool IsEuthanized { get; set; }
 
         public int PetTypeId { get; set; }
 
-        public virtual PetType PetType { get; set; }
+        public PetTypeDetailsVM PetType { get; set; }
 
         public int BreedId { get; set; }
 
-        public virtual Breed Breed { get; set; }
+        public BreedDetailsVM Breed { get; set; }
 
         public int? AdopterId { get; set; }
 
-        public virtual User Adopter { get; set; }
+        public UserDetailsVM Adopter { get; set; }
 
         public int? GiverId { get; set; }
 
-        public virtual User Giver { get; set;}
+        public UserDetailsVM Giver { get; set; }
 
-        public int? ShelterId { get; set; }  
+        public int? ShelterId { get; set; }
 
-        public virtual Shelter Shelter { get; set; }
+        public ShelterDetailsVM Shelter { get; set; }
 
-        public virtual List<PetVaccine> PetVaccines { get; set; }
-
-        public List<PetDetailsVM> Pets { get; set; }
+        public List<PetVaccineDetailsVM> PetVaccines { get; set; }
 
     }
 }
