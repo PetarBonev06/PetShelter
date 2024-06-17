@@ -1,6 +1,6 @@
 ﻿namespace PetShelter.Data.Entities
 {
-    public class User : BaseEntity
+    public class User : BaseEntity, IBaseEntity
     {
         public User()
         {

@@ -1,4 +1,4 @@
-﻿@model PetShelter.ViewModels.BreedDetailsVM
+@model PetShelter.ViewModels.BreedDetailsVM
 
 @{ ViewBag.Title = "Details"; }
 
@@ -19,16 +19,10 @@
         <dt>
             @Html.DisplayFor(model => model.Size)
         </dt>
-        <dt>
-            @Html.DisplayNameFor(model => model.Pets)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Pets)
-        </dd>
 
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "List")
+    @Html.ActionLink("Back to List", "List") 
 </p>

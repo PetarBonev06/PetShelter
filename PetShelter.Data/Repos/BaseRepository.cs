@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PetShelter.Data.Entities;
 using PetShelter.Shared.Dtos;
 using PetShelter.Shared.Repos.Contracts;
+using System.Runtime.InteropServices;
 
 namespace PetShelter.Data.Repos
 {
@@ -105,33 +106,41 @@ namespace PetShelter.Data.Repos
                 await CreateAsync(model);
         }
 
+
         public async Task DeleteAsync(int id)
         {
             var entity = await this._dbSet.FindAsync(id);
-
             if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
+           throw new ArgumentNullException(nameof(entity));
 
             try
             {
                 _dbSet.Remove(entity);
                 await _context.SaveChangesAsync();
             }
+
             catch (SqlException ex)
+
             {
-                await Console.Out.WriteLineAsync($"The system threw an sql exception trying to delete {nameof(entity)}: {ex.Message}");
+                // Here we can save these errors in some logs or telemetry
+                await Console.Out.WriteLineAsync($"The system threw an non-sql exception trying to delete {nameof(entity)}: {ex.Message}");
             }
+
             catch (Exception ex)
+
             {
-                await Console.Out.WriteLineAsync($"The system threw a non-sql exception trying to delete {nameof(entity)}: {ex.Message}");
+                // Here we can save these errors in some logs or telemetry
+                await Console.Out.WriteLineAsync($"The system threw an non-sql exception trying to delete {nameof(entity)}: {ex.Message}");
             }
+
         }
+
 
         public Task<bool> ExistsByIdAsync(int id)
         {
             return _dbSet.AnyAsync(e => e.Id == id);
         }
-         
+
         public async Task<IEnumerable<TModel>> GetWithPaginationAsync(int pageSize, int pageNumber)
         {
             var paginatedRecords = await _dbSet
@@ -148,7 +157,7 @@ namespace PetShelter.Data.Repos
             {
                 if (disposing)
                 {
-                    _context.Dispose(); 
+                    _context.Dispose();
                 }
 
                 disposedValue = true;
@@ -160,5 +169,5 @@ namespace PetShelter.Data.Repos
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-    }  
+    }
 }

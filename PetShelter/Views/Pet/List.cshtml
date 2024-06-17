@@ -1,11 +1,12 @@
-﻿@using System.Security.Claims
-@using PetShelter.Shared
-@using PetShelter.Shared.Enums
+﻿@using PetShelter.Shared.Enums
+@using System.Security.Claims
 @model IEnumerable<PetShelter.ViewModels.PetDetailsVM>
 
-@{ ViewBag.Title = "List"; }
+@{
+    ViewBag.Title = "Index";
+}
 
-<h2>Pets</h2>
+<h2>Pet</h2>
 <p>
     @if (Context.User?.FindFirst(ClaimTypes.Role)?.Value == UserRole.Employee.ToString() ||
 
@@ -17,8 +18,6 @@
     {
         @Html.ActionLink("Give Pet", "GivePet")
     }
-
-
 </p>
 <table class="table">
 
@@ -32,70 +31,47 @@
         <th>
             @Html.DisplayNameFor(model => model.Color)
         </th>
-
         <th>
             @Html.DisplayNameFor(model => model.IsAdopted)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IsEuthanized)
         </th>
-
-
+        <th>
+            @Html.DisplayNameFor(model => model.ShelterId)
+        </th>
         <th>Actions</th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
             <th>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelitem => item.Name)
             </th>
             <th>
-                @Html.DisplayFor(modelItem => item.Age)
+                @Html.DisplayFor(modelitem => item.Age)
             </th>
             <th>
-                @Html.DisplayFor(modelItem => item.Color)
-            </th>
-
-            <th>
-                @Html.DisplayFor(modelItem => item.IsAdopted)
+                @Html.DisplayFor(modelitem => item.Color)
             </th>
             <th>
-                @Html.DisplayFor(modelItem => item.IsEuthanized)
+                @Html.DisplayFor(modelitem => item.IsAdopted)
             </th>
-
-
+            <th>
+                @Html.DisplayFor(modelitem => item.IsEuthanized)
+            </th>
+           
+            <th>
+                @Html.DisplayFor(modelitem => item.ShelterId)
+            </th>
+       
             <td>
-                @if (Context.User?.FindFirst(ClaimTypes.Role)?.Value == UserRole.Employee.ToString() ||
-
-               Context.User?.FindFirst(ClaimTypes.Role)?.Value == UserRole.Admin.ToString())
-                {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-
-                    @:|
-                    @Html.ActionLink("Details", "Details", new { id = item.Id })
-
-                    @:|
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-
-                    @:|
-                    @Html.ActionLink("Adopt Pet", "AdoptPet", new { id = item.Id })
-
-                    @:|
-                    @Html.ActionLink("Vaccinate Pet", "VaccinatePet", new { petId = item.Id })
-
-
-                }
-                else
-                {
-                    @Html.ActionLink("Adopt Pet", "AdoptPet", new { id = item.Id })
-
-                    @:|
-                    @Html.ActionLink("Details", "Details", new { id = item.Id })
-
-
-                }
-
-
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                @Html.ActionLink("Adopt Pet", "AdoptPet", new { id = item.Id })|
+                @Html.ActionLink("Vaccine Pet", "VaccinatePet", new { id = item.Id }) |
+                
             </td>
         </tr>
     }

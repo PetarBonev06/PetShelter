@@ -2,7 +2,7 @@
 
 namespace PetShelter.Data.Entities
 {
-    public class Location : BaseEntity
+    public class Location : BaseEntity, IBaseEntity
     {        
         public string City { get; set; }
                 
