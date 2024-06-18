@@ -15,7 +15,7 @@ using System.Security.Claims;
 
 namespace PetShelter.Controllers
 {
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin, Employee")]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin, Employee, User")]
     public class PetController : BaseCrudController<PetDto, IPetRepository, IPetService, PetEditVM, PetDetailsVM>
     {
         protected readonly IPetTypeService _petTypeService;
@@ -102,7 +102,7 @@ namespace PetShelter.Controllers
         public virtual async Task<IActionResult> VaccinatePet(int id, VaccinatePetVM editVM)
         {
             await this._service.VaccinatePetAsync(editVM.PetId, editVM.VaccineId);
-            return await List();
+            return await List();    
         }
     }
 }

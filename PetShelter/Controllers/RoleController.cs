@@ -8,7 +8,7 @@ using PetShelter.ViewModels;
 
 namespace PetShelter.Controllers
 {
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Admin ,Employee, User")]
     public class RoleController : BaseCrudController<RoleDto, IRoleRepository, IRoleService, RoleEditVM, RoleDetailsVM>
     {
         public RoleController(IRoleService service, IMapper mapper) : base(service, mapper)

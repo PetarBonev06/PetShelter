@@ -75,14 +75,14 @@ namespace PetShelter.Tests.Services
             };
 
 
-            _breedRepositoryMock.Setup(x => x.GetByIdAsync(It.Is<int>(x => x.Equals(breedId))))
+            _breedRepositoryMock.Setup(x => x.GetByIdIfExistsAsync(It.Is<int>(x => x.Equals(breedId))))
                 .ReturnsAsync(breedDto);
 
             //Act
             var userResult = await _service.GetByIdIfExistsAsync(breedId);
 
             //Assert
-            _breedRepositoryMock.Verify(x => x.GetByIdAsync(breedId), Times.Once());
+            _breedRepositoryMock.Verify(x => x.GetByIdIfExistsAsync(breedId), Times.Once());
             Assert.That(userResult == breedDto);
         }
         [TestCase(0)]
@@ -92,14 +92,14 @@ namespace PetShelter.Tests.Services
         {
             //Arrange
             var breed = (BreedDto)default;
-            _breedRepositoryMock.Setup(s => s.GetByIdAsync(It.Is<int>(x => x.Equals(breedId))))
+            _breedRepositoryMock.Setup(s => s.GetByIdIfExistsAsync(It.Is<int>(x => x.Equals(breedId))))
             .ReturnsAsync(breed);
 
             //Act
             var userResult = await _service.GetByIdIfExistsAsync(breedId);
 
             //Assert
-            _breedRepositoryMock.Verify(x => x.GetByIdAsync(breedId), Times.Once());
+            _breedRepositoryMock.Verify(x => x.GetByIdIfExistsAsync(breedId), Times.Once());
             Assert.That(userResult == breed);
         }
         [Test]

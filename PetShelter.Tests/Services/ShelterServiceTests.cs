@@ -74,13 +74,13 @@ namespace PetShelter.Tests.Services
                 PetCapacity = 200,
                 LocationId = 1
             };
-            _shelterRepositoryMock.Setup(s => s.GetByIdAsync(It.Is<int>(x => x.Equals(shelterId))))
+            _shelterRepositoryMock.Setup(s => s.GetByIdIfExistsAsync(It.Is<int>(x => x.Equals(shelterId))))
                 .ReturnsAsync(shelterDto);
             //Act
             var userResult = await _service.GetByIdIfExistsAsync(shelterId);
 
             //Assert
-            _shelterRepositoryMock.Verify(x => x.GetByIdAsync(shelterId), Times.Once);
+            _shelterRepositoryMock.Verify(x => x.GetByIdIfExistsAsync(shelterId), Times.Once);
             Assert.That(userResult == shelterDto);
         }
 
@@ -90,14 +90,14 @@ namespace PetShelter.Tests.Services
         public async Task WhenGetByAsync_WithInvalidBreedId_ThenReturnDefault(int shelterId)
         {
             var shelter = (ShelterDto)default;
-            _shelterRepositoryMock.Setup(s => s.GetByIdAsync(It.Is<int>(x => x.Equals(shelterId))))
+            _shelterRepositoryMock.Setup(s => s.GetByIdIfExistsAsync(It.Is<int>(x => x.Equals(shelterId))))
                 .ReturnsAsync(shelter);
 
             //Act
             var userResult = await _service.GetByIdIfExistsAsync(shelterId);
 
             //Assert
-            _shelterRepositoryMock.Verify(x => x.GetByIdAsync(shelterId), Times.Once);
+            _shelterRepositoryMock.Verify(x => x.GetByIdIfExistsAsync(shelterId), Times.Once);
             Assert.That(userResult == shelter);
 
         }

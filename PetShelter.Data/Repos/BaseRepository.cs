@@ -12,7 +12,7 @@ namespace PetShelter.Data.Repos
         where T : class, IBaseEntity
         where TModel : BaseModel
     {
-        protected readonly DbContext _context;
+        protected readonly PetShelterDbContext _context;
         protected readonly DbSet<T> _dbSet;
         protected readonly IMapper mapper;
         private bool disposedValue;
@@ -23,17 +23,20 @@ namespace PetShelter.Data.Repos
             _dbSet = _context.Set<T>();
             this.mapper = mapper;
         }
+
         public virtual TModel MapToModel(T entity)
         {
             return mapper.Map<TModel>(entity);
         }
+
         public virtual T MapToEntity(TModel model)
         {
             return mapper.Map<T>(model);
         }
-        public virtual IEnumerable<TModel> MapToEnumerableOfModel(IEnumerable<T> entites)
+
+        public virtual IEnumerable<TModel> MapToEnumerableOfModel(IEnumerable<T> entities)
         {
-            return mapper.Map<IEnumerable<TModel>>(entites);
+            return mapper.Map<IEnumerable<TModel>>(entities);
         }
 
         public async Task<IEnumerable<TModel>> GetAllAsync()
@@ -41,7 +44,7 @@ namespace PetShelter.Data.Repos
             return this.MapToEnumerableOfModel(await _dbSet.ToListAsync());
         }
 
-        public async Task<TModel> GetByIdAsync(int id)
+        public async Task<TModel> GetByIdIfExistsAsync(int id)
         {
             var user = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
             if (user == null)
@@ -63,11 +66,15 @@ namespace PetShelter.Data.Repos
             }
             catch (SqlException ex)
             {
+                // Here we can save these errors in some logs or telemetery
                 await Console.Out.WriteLineAsync($"The system threw an sql exception trying to create {nameof(model)}: {ex.Message}");
+
             }
             catch (Exception ex)
             {
-                await Console.Out.WriteLineAsync($"The system threw a non-sql exception trying to create {nameof(model)}: {ex.Message}");
+                // Here we can save these errors in some logs or telemetery
+                await Console.Out.WriteLineAsync($"The system threw an non-sql exception trying to create {nameof(model)}: {ex.Message}");
+
             }
         }
 
@@ -81,20 +88,22 @@ namespace PetShelter.Data.Repos
                 var entity = await this._dbSet.FindAsync(model.Id);
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
-
                 _context.Entry(entity).CurrentValues.SetValues(model);
                 await _context.SaveChangesAsync();
             }
             catch (SqlException ex)
             {
+                // Here we can save these errors in some logs or telemetry
                 await Console.Out.WriteLineAsync($"The system threw an sql exception trying to update {nameof(model)}: {ex.Message}");
+
             }
             catch (Exception ex)
             {
-                await Console.Out.WriteLineAsync($"The system threw a non-sql exception trying to update {nameof(model)}: {ex.Message}");
+                // Here we can save these errors in some logs or telemetry
+                await Console.Out.WriteLineAsync($"The system threw an non-sql exception trying to update {nameof(model)}: {ex.Message}");
+
             }
         }
-
         public async Task SaveAsync(TModel model)
         {
             if (model == null)
@@ -106,35 +115,31 @@ namespace PetShelter.Data.Repos
                 await CreateAsync(model);
         }
 
-
         public async Task DeleteAsync(int id)
         {
             var entity = await this._dbSet.FindAsync(id);
+
             if (entity == null)
-           throw new ArgumentNullException(nameof(entity));
+                throw new ArgumentNullException(nameof(entity));
 
             try
             {
                 _dbSet.Remove(entity);
                 await _context.SaveChangesAsync();
             }
-
             catch (SqlException ex)
-
             {
                 // Here we can save these errors in some logs or telemetry
                 await Console.Out.WriteLineAsync($"The system threw an non-sql exception trying to delete {nameof(entity)}: {ex.Message}");
-            }
 
+            }
             catch (Exception ex)
-
             {
                 // Here we can save these errors in some logs or telemetry
                 await Console.Out.WriteLineAsync($"The system threw an non-sql exception trying to delete {nameof(entity)}: {ex.Message}");
+
             }
-
         }
-
 
         public Task<bool> ExistsByIdAsync(int id)
         {
@@ -147,11 +152,10 @@ namespace PetShelter.Data.Repos
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
-
             return MapToEnumerableOfModel(paginatedRecords);
         }
 
-        protected virtual void Dispose(bool disposing)
+        public virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
             {
@@ -168,6 +172,7 @@ namespace PetShelter.Data.Repos
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+            
         }
     }
 }

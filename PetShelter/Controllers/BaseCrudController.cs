@@ -8,6 +8,7 @@ using PetShelter.Shared.Dtos;
 using PetShelter.Shared.Repos.Contracts;
 using PetShelter.Shared.Services.Contracts;
 using PetShelter.ViewModels;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
@@ -15,11 +16,11 @@ using System.Threading.Tasks;
 namespace PetShelter.Controllers
 {
     public abstract class BaseCrudController<TModel, TRepository, TService, TEditVM, TDetailsVM> : Controller
-        where TModel : BaseModel
-        where TRepository : IBaseRepository<TModel>
-        where TService : IBaseCrudService<TModel, TRepository>
-        where TEditVM : BaseVm, new ()
-        where TDetailsVM : BaseVm
+       where TModel : BaseModel
+       where TRepository : IBaseRepository<TModel>
+       where TService : IBaseCrudService<TModel, TRepository>
+       where TEditVM : BaseVm, new()
+       where TDetailsVM : BaseVm
     {
         protected readonly TService _service;
         protected readonly IMapper _mapper;
@@ -33,7 +34,6 @@ namespace PetShelter.Controllers
         protected const int DefaultPageSize = 10;
         protected const int DefaultPageNumber = 1;
         protected const int MaxPageSize = 100;
-
         protected virtual Task<string?> Validate(TEditVM editVM)
         {
             return Task.FromResult<string?>(null);
@@ -43,6 +43,7 @@ namespace PetShelter.Controllers
         {
             return Task.FromResult(editVM);
         }
+
 
         [HttpGet]
         public virtual async Task<IActionResult> List(int pageSize = DefaultPageSize, int pageNumber = DefaultPageNumber)
@@ -117,6 +118,7 @@ namespace PetShelter.Controllers
             }
 
             var mappedModel = _mapper.Map<TEditVM>(model);
+            mappedModel = await PrePopulateVMAsync(mappedModel);
 
             return View(mappedModel);
         }

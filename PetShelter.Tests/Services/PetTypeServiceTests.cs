@@ -72,13 +72,13 @@ namespace PetShelter.Tests.Services
             {
                 Name = "Copacabana",
             };
-            _petTypeRepositoryMock.Setup(s => s.GetByIdAsync(It.Is<int>(x => x.Equals(petTypeId))))
+            _petTypeRepositoryMock.Setup(s => s.GetByIdIfExistsAsync(It.Is<int>(x => x.Equals(petTypeId))))
                 .ReturnsAsync(petTypeDto);
             //Act
             var userResult = await _service.GetByIdIfExistsAsync(petTypeId);
 
             //Assert
-            _petTypeRepositoryMock.Verify(x => x.GetByIdAsync(petTypeId), Times.Once);
+            _petTypeRepositoryMock.Verify(x => x.GetByIdIfExistsAsync(petTypeId), Times.Once);
             Assert.That(userResult == petTypeDto);
         }
 
@@ -88,14 +88,14 @@ namespace PetShelter.Tests.Services
         public async Task WhenGetByAsync_WithInvalidBreedId_ThenReturnDefault(int petTypeId)
         {
             var petType = (PetTypeDto)default;
-            _petTypeRepositoryMock.Setup(s => s.GetByIdAsync(It.Is<int>(x => x.Equals(petTypeId))))
+            _petTypeRepositoryMock.Setup(s => s.GetByIdIfExistsAsync(It.Is<int>(x => x.Equals(petTypeId))))
                 .ReturnsAsync(petType);
 
             //Act
             var userResult = await _service.GetByIdIfExistsAsync(petTypeId);
 
             //Assert
-            _petTypeRepositoryMock.Verify(x => x.GetByIdAsync(petTypeId), Times.Once);
+            _petTypeRepositoryMock.Verify(x => x.GetByIdIfExistsAsync(petTypeId), Times.Once);
             Assert.That(userResult == petType);
 
         }

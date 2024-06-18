@@ -22,7 +22,7 @@ namespace PetShelter.Data.Repos
 
         public async Task AdoptPetAsync(int userId, int petId)
         {
-            var pet = await GetByIdAsync(petId);
+            var pet = await GetByIdIfExistsAsync(petId);
             pet.AdopterId = userId;
             pet.IsAdopted = true;
             await SaveAsync(pet);

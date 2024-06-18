@@ -5,422 +5,81 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PetShelter.Data;
+using PetShelter.Data.Entities;
+using PetShelter.Shared.Enums;
+using PetShelter.Shared.Security;
 
 #nullable disable
 
 namespace PetShelter.Data.Migrations
 {
-    [DbContext(typeof(PetShelterDbContext))]
-    partial class PetShelterDbContextModelSnapshot : ModelSnapshot
+    public class PetShelterDbContext : DbContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        public DbSet<User> Users { get; set; }
+        public DbSet<Vaccine> Vaccines { get; set; }
+        public DbSet<PetVaccine> PetVaccines { get; set; }
+        public DbSet<Breed> Breeds { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Shelter> Shelters { get; set; }
+        public DbSet<PetType> PetTypes { get; set; }
+        public DbSet<Pet> Pets { get; set; }
+
+        public PetShelterDbContext(DbContextOptions<PetShelterDbContext> options) : base(options)
         {
-#pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+        }
+        public PetShelterDbContext()
+        {
 
-            modelBuilder.Entity("PetShelter.Data.Entities.Breed", b =>
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Breed>()
+                .HasMany(b => b.Pets)
+                .WithOne(p => p.Breed)
+                .HasForeignKey(p => p.BreedId);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.AdoptedPets)
+                .WithOne(p => p.Adopter)
+                .HasForeignKey(p => p.AdopterId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.GivenPets)
+                .WithOne(u => u.Giver)
+                .HasForeignKey(p => p.GiverId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Shelter>()
+                .HasOne(a => a.Location)
+                .WithOne(a => a.Shelter)
+                .HasForeignKey<Location>(c => c.ShelterId);
+
+            foreach (var role in Enum.GetValues(typeof(UserRole)).Cast<UserRole>())
+            {
+                modelBuilder.Entity<Role>().HasData(new Role { Id = (int)role, Name = role.ToString() });
+            }
+
+            modelBuilder.Entity<User>()
+                .HasData(new User
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Size")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Breed");
+                    Id = 1,
+                    Username = "admin",
+                    RoleId = (int)UserRole.Admin,
+                    FirstName = "Admin",
+                    LastName = "User",
+                    Password = PasswordHasher.HashPassword("string")
                 });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.Location", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ShelterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ShelterId")
-                        .IsUnique()
-                        .HasFilter("[ShelterId] IS NOT NULL");
-
-                    b.ToTable("Location");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.Pet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AdopterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BreedId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("GiverId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsAdopted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsEuthanized")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("PetTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ShelterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdopterId");
-
-                    b.HasIndex("BreedId");
-
-                    b.HasIndex("GiverId");
-
-                    b.HasIndex("PetTypeId");
-
-                    b.HasIndex("ShelterId");
-
-                    b.ToTable("Pet");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.PetType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PetType");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.PetVaccine", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PetId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VaccineId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PetId");
-
-                    b.HasIndex("VaccineId");
-
-                    b.ToTable("PetVaccine");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "User"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Employee"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Admin"
-                        });
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.Shelter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PetCapacity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Shelter");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ShelterId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("ShelterId");
-
-                    b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FirstName = "Admin",
-                            LastName = "User",
-                            Password = "kn6a/A9ZBERgu8Z65dJeif2Lp2EyTnRYvY+2rRPTgJV79Am97u5OkEeE122CVVAd",
-                            RoleId = 3,
-                            Username = "admin"
-                        });
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.Vaccine", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Vaccine");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.Location", b =>
-                {
-                    b.HasOne("PetShelter.Data.Entities.Shelter", "Shelter")
-                        .WithOne("Location")
-                        .HasForeignKey("PetShelter.Data.Entities.Location", "ShelterId");
-
-                    b.Navigation("Shelter");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.Pet", b =>
-                {
-                    b.HasOne("PetShelter.Data.Entities.User", "Adopter")
-                        .WithMany("AdoptedPets")
-                        .HasForeignKey("AdopterId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PetShelter.Data.Entities.Breed", "Breed")
-                        .WithMany("Pets")
-                        .HasForeignKey("BreedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PetShelter.Data.Entities.User", "Giver")
-                        .WithMany("GivenPets")
-                        .HasForeignKey("GiverId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PetShelter.Data.Entities.PetType", "PetType")
-                        .WithMany("Pets")
-                        .HasForeignKey("PetTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PetShelter.Data.Entities.Shelter", "Shelter")
-                        .WithMany("Pets")
-                        .HasForeignKey("ShelterId");
-
-                    b.Navigation("Adopter");
-
-                    b.Navigation("Breed");
-
-                    b.Navigation("Giver");
-
-                    b.Navigation("PetType");
-
-                    b.Navigation("Shelter");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.PetVaccine", b =>
-                {
-                    b.HasOne("PetShelter.Data.Entities.Pet", "Pet")
-                        .WithMany("PetVaccines")
-                        .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PetShelter.Data.Entities.Vaccine", "Vaccine")
-                        .WithMany("PetVaccines")
-                        .HasForeignKey("VaccineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pet");
-
-                    b.Navigation("Vaccine");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.User", b =>
-                {
-                    b.HasOne("PetShelter.Data.Entities.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId");
-
-                    b.HasOne("PetShelter.Data.Entities.Shelter", "Shelter")
-                        .WithMany("Employees")
-                        .HasForeignKey("ShelterId");
-
-                    b.Navigation("Role");
-
-                    b.Navigation("Shelter");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.Breed", b =>
-                {
-                    b.Navigation("Pets");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.Pet", b =>
-                {
-                    b.Navigation("PetVaccines");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.PetType", b =>
-                {
-                    b.Navigation("Pets");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.Role", b =>
-                {
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.Shelter", b =>
-                {
-                    b.Navigation("Employees");
-
-                    b.Navigation("Location")
-                        .IsRequired();
-
-                    b.Navigation("Pets");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.User", b =>
-                {
-                    b.Navigation("AdoptedPets");
-
-                    b.Navigation("GivenPets");
-                });
-
-            modelBuilder.Entity("PetShelter.Data.Entities.Vaccine", b =>
-                {
-                    b.Navigation("PetVaccines");
-                });
-#pragma warning restore 612, 618
         }
     }
 }

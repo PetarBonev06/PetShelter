@@ -75,13 +75,13 @@ namespace PetShelter.Tests.Services
             };
 
 
-            _locationRepositoryMock.Setup(x => x.GetByIdAsync(It.Is<int>(x => x.Equals(locationId))))
+            _locationRepositoryMock.Setup(x => x.GetByIdIfExistsAsync(It.Is<int>(x => x.Equals(locationId))))
                 .ReturnsAsync(locationDto);
 
             //Act
             var userResult = await _service.GetByIdIfExistsAsync(locationId);
             //Assert
-            _locationRepositoryMock.Verify(x => x.GetByIdAsync(locationId), Times.Once());
+            _locationRepositoryMock.Verify(x => x.GetByIdIfExistsAsync(locationId), Times.Once());
             Assert.That(userResult == locationDto);
         }
         [TestCase(0)]
@@ -91,14 +91,14 @@ namespace PetShelter.Tests.Services
         {
             //Arrange
             var location = (LocationDto)default;
-            _locationRepositoryMock.Setup(s => s.GetByIdAsync(It.Is<int>(x => x.Equals(locationId))))
+            _locationRepositoryMock.Setup(s => s.GetByIdIfExistsAsync(It.Is<int>(x => x.Equals(locationId))))
             .ReturnsAsync(location);
 
             //Act
             var userResult = await _service.GetByIdIfExistsAsync(locationId);
 
             //Assert
-            _locationRepositoryMock.Verify(x => x.GetByIdAsync(locationId), Times.Once());
+            _locationRepositoryMock.Verify(x => x.GetByIdIfExistsAsync(locationId), Times.Once());
             Assert.That(userResult == location);
         }
         [Test]

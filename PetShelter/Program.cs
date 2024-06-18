@@ -1,3 +1,4 @@
+using EntityFrameworkCore.UseRowNumberForPaging;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<PetShelterDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"], i => i.UseRowNumberForPaging());
 });
 
 builder.Services.AutoBind(typeof(PetService).Assembly);
